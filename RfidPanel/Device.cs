@@ -11,11 +11,11 @@ namespace RfidPanel
 
         public event EventHandler<string> UidReceived;
 
-        public bool IsOpen { get => _port == null ? false : _port.IsOpen; }
+        public bool IsOpen => _port?.IsOpen ?? false;
 
-        public void Open(Configuration config)
+        public bool Open(Configuration config)
         {
-            if (IsOpen) return;
+            if (IsOpen) return false;
 
             _port = new SerialPort(config.PortName, config.BaudRate);
             if (config.UseTimeouts)
@@ -23,21 +23,37 @@ namespace RfidPanel
                 _port.WriteTimeout = config.WriteTimeout;
                 _port.ReadTimeout = config.ReadTimeout;
             }
+            
+            _port.Open();
 
-            _port.DataReceived += DataReceived;
+            bool valid;
+            try
+            {
+                valid = _port.ReadLine().TrimStart().StartsWith("Firmware version:");
+            }
+            catch (TimeoutException)
+            {
+                valid = false;
+            }
+
+            if (!valid)
+            {
+                _port.Close();
+                return false;
+            }
 
             _buffer.Clear();
-            _port.Open();
+            _port.DataReceived += DataReceived;
+            return true;
         }
 
         private void DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            SerialPort port = sender as SerialPort;
-            if (port == null) return;
+            if (!(sender is SerialPort port)) return;
 
             while (port.BytesToRead > 0)
             {
-                char c = (char)port.ReadChar();
+                var c = (char)port.ReadChar();
                 if (c == '\n')
                 {
                     var s = _buffer.ToString();
@@ -51,11 +67,24 @@ namespace RfidPanel
 
         public void Close()
         {
-            if (IsOpen)
+            if (!IsOpen) return;
+            _port.Close();
+            _port = null;
+        }
+
+        public static Device FindDevice(Configuration config)
+        {
+            var device = new Device();
+            foreach (var portName in SerialPort.GetPortNames())
             {
-                _port.Close();
-                _port = null;
+                config.PortName = portName;
+                if (device.Open(config))
+                {
+                    return device;
+                }
             }
+
+            return null;
         }
     }
 }

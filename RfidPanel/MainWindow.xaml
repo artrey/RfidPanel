@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RfidPanel"
         mc:Ignorable="d"
         Title="Панель управления" Height="500" Width="700"
-        MinHeight="500" MinWidth="700">
+        MinHeight="500" MinWidth="700" Closing="WindowClosing">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -52,7 +52,7 @@
                 <ListBox x:Name="History" Grid.Row="1" HorizontalContentAlignment="Center" />
             </Grid>
             
-            <Image Grid.Column="1" Source="D:\Downloads\Screenshot_3.png" />
+            <Image Grid.Column="1" x:Name="Photo" />
         </Grid>
 
         <Grid Grid.Row="2" Margin="0,0,0,10">
