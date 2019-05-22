@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -16,15 +17,6 @@ namespace RfidPanel
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //_device.UidReceived += UidReceived;
-            //_device.Open(new Configuration { PortName = "COM16", BaudRate = 115200 });
-            UidReceived(null, "0D 12 43 F1");
-            SetErrorMessage("sdgsdfgsdfg");
-            UID.Text = "gdfgsg";
-        }
-
         private void SetErrorMessage(string mes)
         {
             Dispatcher.Invoke(() =>
@@ -38,7 +30,17 @@ namespace RfidPanel
             SetErrorMessage(string.Empty);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Add(object sender, RoutedEventArgs e)
+        {
+            //_device.UidReceived += UidReceived;
+            //_device.Open(new Configuration { PortName = "COM16", BaudRate = 115200 });
+            UidReceived(null, "0D 12 43 F1");
+            //SetErrorMessage("sdgsdfgsdfg");
+            History.Items.Add(DateTime.Now);
+            UID.Text = "D8 66 32 0E";
+        }
+
+        private void Remove(object sender, RoutedEventArgs e)
         {
             //_device.UidReceived -= UidReceived;
             //_device.Close();
