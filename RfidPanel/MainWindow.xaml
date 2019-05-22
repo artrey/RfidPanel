@@ -5,11 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RfidPanel"
         mc:Ignorable="d"
-        Title="Панель управления" Height="450" Width="800">
-    <Grid>
-        <ListBox x:Name="ListBox" Height="300" Margin="72,58,370,0" VerticalAlignment="Top" Width="350"/>
-        <Button Content="Open" HorizontalAlignment="Left" Margin="483,192,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Button Content="Close" HorizontalAlignment="Left" Margin="483,251,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        Title="Панель управления" Height="450" Width="700">
+    <StackPanel Margin="10">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="ID сотрудника" VerticalAlignment="Center" FontSize="32" Margin="0,0,30,0" />
+            <TextBox x:Name="UID" IsReadOnly="True" FontSize="32" Width="400"
+                     VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
+        </StackPanel>
+        <TextBlock x:Name="Error" FontSize="16" Text="" Margin="0,0,0,10" Foreground="Red"
+                   TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" TextAlignment="Center"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <Label Content="Информация" HorizontalAlignment="Center" FontSize="18" />
+                <Border Margin="0,5" BorderBrush="Gray" BorderThickness="1"></Border>
+                <TextBlock x:Name="Bio" Text="" FontSize="24" TextWrapping="WrapWithOverflow"
+                           HorizontalAlignment="Center" TextAlignment="Center" />
+                <Border Margin="0,5" BorderBrush="Gray" BorderThickness="1"></Border>
+                <TextBlock x:Name="Department" Text="" FontSize="24" TextWrapping="WrapWithOverflow"
+                           HorizontalAlignment="Center" TextAlignment="Center" />
+                <Border Margin="0,5" BorderBrush="Gray" BorderThickness="1"></Border>
+                <Label Content="История отметок" FontSize="18" HorizontalAlignment="Center" />
+                <ListBox x:Name="History" />
+            </StackPanel>
+            <Image Grid.Column="1" Source="C:\Users\ozsas\Downloads\Screenshot_14.png" />
+        </Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Open" Click="Button_Click"/>
+            <Button Content="Close" Click="Button_Click_1"/>
+        </StackPanel>
 
-    </Grid>
+    </StackPanel>
 </Window>
