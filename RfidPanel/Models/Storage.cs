@@ -41,5 +41,19 @@ namespace RfidPanel.Models
             var p = FindPerson(uid);
             return p == null ? null : AddMark(p, time);
         }
+
+        public IEnumerable<Person> Persons()
+        {
+            return _sql.Table<Person>().OrderBy(p => p.Department);
+        }
+
+        public void RemovePerson(Person p)
+        {
+            foreach (var c in Checks(p))
+            {
+                _sql.Delete<Check>(c.Id);
+            }
+            _sql.Delete<Person>(p.Uid);
+        }
     }
 }

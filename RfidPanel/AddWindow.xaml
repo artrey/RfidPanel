@@ -1,0 +1,68 @@
+﻿<Window x:Class="RfidPanel.AddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RfidPanel"
+        mc:Ignorable="d"
+        Title="Панель управления. Добавление сотрудника"
+        Height="560" Width="700"
+        MinHeight="560" MinWidth="700"
+        Closing="WindowClosing">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="ID сотрудника" VerticalAlignment="Center" FontSize="32" Margin="0,0,30,0" />
+                <TextBox x:Name="UID" IsReadOnly="True" FontSize="32" Width="400" Text="Приложите метку" Foreground="Gray"
+                         VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Row="1"  Margin="0,10,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                <Label Content="ФИО" HorizontalAlignment="Center" FontSize="18" />
+                <TextBox x:Name="Bio" Text="" FontSize="24" TextWrapping="WrapWithOverflow"
+                         HorizontalAlignment="Stretch" TextAlignment="Center" />
+                <Border Margin="0,20,0,20" BorderBrush="Gray" BorderThickness="1"></Border>
+                <Label Content="Отдел" HorizontalAlignment="Center" FontSize="18" />
+                <TextBox x:Name="Department" Text="" FontSize="24" TextWrapping="WrapWithOverflow"
+                         HorizontalAlignment="Stretch" TextAlignment="Center" />
+                <Border Margin="0,20,0,20" BorderBrush="Gray" BorderThickness="1"></Border>
+                <Label Content="Фото" HorizontalAlignment="Center" FontSize="18" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Grid.Column="0" x:Name="FilePath" Content="Выберите файл" FontSize="16"
+                           VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                    <Button Grid.Column="1" Content="..." Width="40" FontSize="18" Click="OpenFile"
+                            VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                </Grid>
+            </StackPanel>
+
+            <Image Grid.Column="1" x:Name="Photo"  Margin="5,0,0,0" />
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Добавить" FontSize="26" Margin="10,0" Click="Add"/>
+            <Button Grid.Column="1" Content="Отмена" FontSize="26" Margin="10,0" Click="Cancel"/>
+        </Grid>
+    </Grid>
+</Window>

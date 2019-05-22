@@ -17,7 +17,11 @@ namespace RfidPanel
         {
             if (IsOpen) return false;
 
-            _port = new SerialPort(config.PortName, config.BaudRate);
+            _port = new SerialPort(config.PortName, config.BaudRate)
+            {
+                DtrEnable = true
+            };
+
             if (config.UseTimeouts)
             {
                 _port.WriteTimeout = config.WriteTimeout;
@@ -29,7 +33,7 @@ namespace RfidPanel
             bool valid;
             try
             {
-                valid = _port.ReadLine().TrimStart().StartsWith("Firmware version:");
+                valid = _port.ReadLine().TrimStart().StartsWith("Firmware Version: 0x");
             }
             catch (TimeoutException)
             {
