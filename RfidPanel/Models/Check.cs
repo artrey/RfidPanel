@@ -7,8 +7,11 @@ namespace RfidPanel.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+
+        [NotNull]
         public DateTime Time { get; set; }
-        [Indexed]
+
+        [Indexed, NotNull]
         public string PersonUid { get; set; }
     }
 }

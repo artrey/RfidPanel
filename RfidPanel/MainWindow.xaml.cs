@@ -52,14 +52,14 @@ namespace RfidPanel
         {
             _device.UidReceived -= UidReceived;
             new AddWindow(_device, _storage).ShowDialog();
-            var p = _storage.FindPerson(UID.Text);
-            if (p != null) DisplayPerson(p);
+            UidReceived(null, UID.Text);
             _device.UidReceived += UidReceived;
         }
 
         private void Remove(object sender, RoutedEventArgs e)
         {
             new RemoveWindow(_storage).ShowDialog();
+            UidReceived(null, UID.Text);
         }
 
         private void UidReceived(object sender, string e)
@@ -75,7 +75,10 @@ namespace RfidPanel
             else
             {
                 HideErrorMessage();
-                _storage.AddMark(p, DateTime.Now);
+                if (sender != null)
+                {
+                    _storage.AddMark(p, DateTime.Now);
+                }
             }
             DisplayPerson(p);
         }
