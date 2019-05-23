@@ -10,6 +10,7 @@ namespace RfidPanel.Models
 
         public Storage(string path)
         {
+            // auto generating database and tables if not exists
             _sql = new SQLiteConnection(path);
             _sql.CreateTable<Person>();
             _sql.CreateTable<Check>();
@@ -17,11 +18,13 @@ namespace RfidPanel.Models
 
         public IEnumerable<Check> Checks(Person p)
         {
+            // find all visits by person
             return _sql.Table<Check>().Where(v => v.PersonUid == p.Uid);
         }
 
         public T Add<T>(T item)
         {
+            // insert any (Person or Check) object to database
             _sql.Insert(item);
             return item;
         }
@@ -44,15 +47,18 @@ namespace RfidPanel.Models
 
         public IEnumerable<Person> Persons()
         {
+            // return all persons ordered by department (for pretty output)
             return _sql.Table<Person>().OrderBy(p => p.Department);
         }
 
         public void RemovePerson(Person p)
         {
+            // first, remove all visits of person
             foreach (var c in Checks(p))
             {
                 _sql.Delete<Check>(c.Id);
             }
+            // then remove person
             _sql.Delete<Person>(p.Uid);
         }
     }

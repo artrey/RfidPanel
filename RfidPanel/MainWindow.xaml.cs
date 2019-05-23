@@ -10,8 +10,11 @@ namespace RfidPanel
     /// </summary>
     public partial class MainWindow : Window
     {
+        // The RFID device. It's found automatically
         private readonly Device _device = Device.FindDevice(
             new Configuration { BaudRate = 115200, UseTimeouts = true, ReadTimeout = 3000, WriteTimeout = 3000 });
+
+        // The storage class. It uses SQLite3 in backend
         private readonly Storage _storage = new Storage(Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "rfid.db")
         );
@@ -26,6 +29,7 @@ namespace RfidPanel
                 Environment.Exit(-1);
             }
 
+            // Event on new uid received from arduino + mfrc522
             _device.UidReceived += UidReceived;
         }
 
@@ -50,15 +54,19 @@ namespace RfidPanel
 
         private void Add(object sender, RoutedEventArgs e)
         {
+            // disable all events in main window while add window uses
             _device.UidReceived -= UidReceived;
             new AddWindow(_device, _storage).ShowDialog();
+            // update current uid state
             UidReceived(null, UID.Text);
+            // enable events
             _device.UidReceived += UidReceived;
         }
 
         private void Remove(object sender, RoutedEventArgs e)
         {
             new RemoveWindow(_storage).ShowDialog();
+            // update current uid state
             UidReceived(null, UID.Text);
         }
 
@@ -75,11 +83,13 @@ namespace RfidPanel
             else
             {
                 HideErrorMessage();
+                // if event raised by device (not perform from code), add visit to person
                 if (sender != null)
                 {
                     _storage.AddMark(p, DateTime.Now);
                 }
             }
+            // show person info
             DisplayPerson(p);
         }
 

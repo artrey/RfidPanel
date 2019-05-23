@@ -11,6 +11,7 @@ namespace RfidPanel
 
             var image = new BitmapImage();
 
+            // load bitmab image from bytes (bytes storing in database)
             using (var stream = new MemoryStream(bytes))
             {
                 stream.Position = 0;

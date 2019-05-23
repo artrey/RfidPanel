@@ -64,18 +64,18 @@ namespace RfidPanel
 
         private void OpenFile(object sender, RoutedEventArgs e)
         {
-            // Create OpenFileDialog 
+            // create OpenFileDialog 
             var dlg = new Microsoft.Win32.OpenFileDialog
             {
-                // Set filter for file extension and default file extension
+                // set filter for file extension and default file extension
                 Filter = "PNG Files (*.png)|*.png|JPEG/JPG Files (*.jpeg, *.jpg)|*.jpeg;*.jpg|BMP Files (*.bmp)|*.bmp",
                 DefaultExt = ".png",
             };
 
-            // Display OpenFileDialog by calling ShowDialog method 
+            // display OpenFileDialog by calling ShowDialog method 
             var result = dlg.ShowDialog();
 
-            // Get the selected file name and display in a Label 
+            // get the selected file name and display in a Label 
             if (result.HasValue && result.Value)
             {
                 FilePath.Content = dlg.FileName;
