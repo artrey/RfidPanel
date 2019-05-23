@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:RfidPanel"
         mc:Ignorable="d"
         Title="Панель управления"
-        Height="560" Width="700"
-        MinHeight="560" MinWidth="700"
+        Height="600" Width="700"
+        MinHeight="600" MinWidth="700"
         Closing="WindowClosing">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         
@@ -63,9 +64,12 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Content="Добавить сотрудника"
-                    FontSize="26" Margin="10,0" Click="Add"/>
+                    FontSize="26" Margin="10,0" Click="Add" />
             <Button Grid.Column="1" Content="Удалить сотрудника"
-                    FontSize="26" Margin="10,0" Click="Remove"/>
+                    FontSize="26" Margin="10,0" Click="Remove" />
         </Grid>
+
+        <Button Grid.Row="3" Content="Сгенерировать отчет"
+                FontSize="26" Margin="10" Click="Report" />
     </Grid>
 </Window>

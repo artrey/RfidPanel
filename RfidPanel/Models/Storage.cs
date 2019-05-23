@@ -51,6 +51,12 @@ namespace RfidPanel.Models
             return _sql.Table<Person>().OrderBy(p => p.Department);
         }
 
+        public IEnumerable<Check> Checks()
+        {
+            // return all visits ordered by descending time (for pretty output)
+            return _sql.Table<Check>().OrderByDescending(c => c.Time);
+        }
+
         public void RemovePerson(Person p)
         {
             // first, remove all visits of person

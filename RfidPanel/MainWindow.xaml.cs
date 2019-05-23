@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows;
 using RfidPanel.Models;
 
@@ -68,6 +69,35 @@ namespace RfidPanel
             new RemoveWindow(_storage).ShowDialog();
             // update current uid state
             UidReceived(null, UID.Text);
+        }
+
+        private void Report(object sender, RoutedEventArgs e)
+        {
+            // create OpenFileDialog 
+            var dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                // set filter for file extension and default file extension
+                Filter = "CSV Files (*.csv)|*.csv",
+                DefaultExt = ".csv",
+            };
+
+            // display OpenFileDialog by calling ShowDialog method 
+            var result = dlg.ShowDialog();
+
+            // get the selected file name and display in a Label 
+            if (result.HasValue && result.Value)
+            {
+                // make report in csv
+                var csv = new StringBuilder($@"ФИО;Отдел;Время{Environment.NewLine}");
+
+                foreach (var check in _storage.Checks())
+                {
+                    var p = _storage.FindPerson(check.PersonUid);
+                    csv.AppendLine($"\"{p.Bio}\";\"{p.Department}\";\"{check.Time}\"");
+                }
+
+                File.WriteAllText(dlg.FileName, csv.ToString());
+            }
         }
 
         private void UidReceived(object sender, string e)
